@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>City Finder</title>
+
+  <!-- Added link to the jQuery Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <!-- Added a link to Bootstrap-->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="row">
+
+      <!-- Ajax Connection -->
+      <div class="col-lg-8">
+        <div id="city"></div>
+
+        <div class="input-group">
+            <span class="input-group-btn">
+                <button id ="findCity" class="btn btn-default" type="submit">Add a City <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span></button>
+            </span>
+            <input id="explore" type="text" class="form-control" placeholder="Where would you like to explore?">
+        </div><!-- /input-group -->
+
+        <img src="assets/images/Poweredby_640px-Black_HorizLogo.png">
+
+        <div id="cityResults"></div>
+        
+
+      </div>
+
+      <!-- Search Panel -->
+      <div class="col-lg-4">
+      
+      </div>
+
+    </div>
+  </div>
+
+  <script type="text/javascript">
+
+    $(document).ready(function() {
+      var cities = ["Chicago","Miami","San Diego","Boston"];
+      
+      
+   
+      function renderButtons () {
+        $("#city").empty();
+        var cityNumber = 0;
+        for (i=0;i<cities.length;i++){
+          var a = $("<button>");
+          a.addClass("city");
+          a.attr("data-name", cities[i]);
+          a.attr("id","city-"+ cityNumber++);
+          a.text(cities[i]);
+          console.log(a);
+          console.log($("#city").append(a));
+        } 
+      }
+
+      renderButtons();
+
+     $("#findCity").on("click",function(event){
+        event.preventDefault();
+        var city = $("#explore").val().trim();;
+        console.log(city);
+        cities.push(city);
+        renderButtons(); 
+
+        function ajaxCall () {
+          var queryParams = {q:city,rating:"pg-13",limit:"10",api_key:"h7qcAG9L2d7HxbOrYOig7VjbyaqyiA4x"}; 
+        var queryURL = "http://api.giphy.com/v1/gifs/search?";
+        var queryURL = queryURL + $.param(queryParams);
+        console.log(queryURL); 
+        $.ajax({
+          url:queryURL,
+          method:"GET"
+          }).then(function(response){
+           console.log(this.url);
+           console.log(response);
+          var results = response.data;
+          console.log(results); 
+          var number = 0
+          for (i=0;i<results.length;i++){
+            console.log(results[i]);
+            var gifDiv = $("#cityResults");
+            var cityImage = $("<img>");
+            cityImage.attr("src",results[i].images.downsized_still.url)
+            cityImage.attr("data-still",results[i].images.fixed_height.url)
+            cityImage.attr("data-animate",results[i].images.downsized_still.url); 
+            cityImage.attr("data-state","still");
+            cityImage.attr("id","image" + number++);
+            console.log(cityImage);
+            gifDiv.append(cityImage);
+            var rating = $("<p>");
+            console.log(rating);
+            rating = results[i].rating;
+            console.log(rating);
+            gifDiv.append("Rating: " + rating);
+            
+          }
+          $("#image0").on("click",function(event){
+            var state = $("#image0").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image0").attr("src",$("#image0").attr("data-still"));
+              $("#image0").attr("data-state", "animate");
+            }
+            else{
+              $("#image0").attr("src",$("#image0").attr("data-animate"));
+              $("#image0").attr("data-state", "still");
+            }
+            
+          })
+          $("#image1").on("click",function(event){
+            var state = $("#image1").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image1").attr("src",$("#image1").attr("data-still"));
+              $("#image1").attr("data-state", "animate");
+            }
+            else{
+              $("#image1").attr("src",$("#image1").attr("data-animate"));
+              $("#image1").attr("data-state", "still");
+            }
+          })
+          $("#image2").on("click",function(event){
+            var state = $("#image2").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image2").attr("src",$("#image2").attr("data-still"));
+              $("#image2").attr("data-state", "animate");
+            }
+            else{
+              $("#image2").attr("src",$("#image2").attr("data-animate"));
+              $("#image2").attr("data-state", "still");
+            }
+          })
+          $("#image3").on("click",function(event){
+            var state = $("#image3").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image3").attr("src",$("#image3").attr("data-still"));
+              $("#image3").attr("data-state", "animate");
+            }
+            else{
+              $("#image3").attr("src",$("#image3").attr("data-animate"));
+              $("#image3").attr("data-state", "still");
+            }
+          })
+          $("#image4").on("click",function(event){
+            var state = $("#image4").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image4").attr("src",$("#image4").attr("data-still"));
+              $("#image4").attr("data-state", "animate");
+            }
+            else{
+              $("#image4").attr("src",$("#image4").attr("data-animate"));
+              $("#image4").attr("data-state", "still");
+            }
+          })
+          $("#image5").on("click",function(event){
+            var state = $("#image5").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image5").attr("src",$("#image5").attr("data-still"));
+              $("#image5").attr("data-state", "animate");
+            }
+            else{
+              $("#image5").attr("src",$("#image5").attr("data-animate"));
+              $("#image5").attr("data-state", "still");
+            }
+          })
+          $("#image6").on("click",function(event){
+            var state = $("#image6").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image6").attr("src",$("#image6").attr("data-still"));
+              $("#image6").attr("data-state", "animate");
+            }
+            else{
+              $("#image6").attr("src",$("#image6").attr("data-animate"));
+              $("#image6").attr("data-state", "still");
+            }
+          })
+          $("#image7").on("click",function(event){
+            var state = $("#image7").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image7").attr("src",$("#image7").attr("data-still"));
+              $("#image7").attr("data-state", "animate");
+            }
+            else{
+              $("#image7").attr("src",$("#image7").attr("data-animate"));
+              $("#image7").attr("data-state", "still");
+            }
+          })
+          $("#image8").on("click",function(event){
+            var state = $("#image8").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image8").attr("src",$("#image8").attr("data-still"));
+              $("#image8").attr("data-state", "animate");
+            }
+            else{
+              $("#image8").attr("src",$("#image8").attr("data-animate"));
+              $("#image8").attr("data-state", "still");
+            }
+          })
+          $("#image9").on("click",function(event){
+            var state = $("#image9").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image9").attr("src",$("#image9").attr("data-still"));
+              $("#image9").attr("data-state", "animate");
+            }
+            else{
+              $("#image9").attr("src",$("#image9").attr("data-animate"));
+              $("#image9").attr("data-state", "still");
+            }
+          })
+      
+        });
+        }
+
+        ajaxCall();   
+    });
+
+       $("#city-0").on("click",function(){
+        var queryParams = {q:"Chicago",rating:"pg-13",limit:"10",api_key:"h7qcAG9L2d7HxbOrYOig7VjbyaqyiA4x"}; 
+        console.log(queryParams)
+        console.log("Hello")
+        var queryURL = "http://api.giphy.com/v1/gifs/search?";
+        var queryURL = queryURL + $.param(queryParams);
+        console.log(queryURL);
+        $.ajax({
+          url:queryURL,
+          method:"GET"
+        }).then(function(response){
+          console.log(response);
+          var results = response.data;
+          console.log(results);
+          var number = 0;
+          for (i=0;i<results.length;i++){
+            console.log(results[i]);
+            var gifDiv = $("#cityResults");
+            var cityImage = $("<img>");
+            cityImage.attr("src",results[i].images.downsized_still.url)
+            cityImage.attr("data-still",results[i].images.fixed_height.url)
+            cityImage.attr("data-animate",results[i].images.downsized_still.url); 
+            cityImage.attr("data-state","still");
+            cityImage.attr("id","image" + number++);
+            console.log(cityImage);
+            gifDiv.append(cityImage);
+            var rating = $("<p>");
+            console.log(rating);
+            rating = results[i].rating;
+            console.log(rating);
+            gifDiv.append("Rating: " + rating);
+          }
+          $("#image0").on("click",function(event){
+            var state = $("#image0").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image0").attr("src",$("#image0").attr("data-still"));
+              $("#image0").attr("data-state", "animate");
+            }
+            else{
+              $("#image0").attr("src",$("#image0").attr("data-animate"));
+              $("#image0").attr("data-state", "still");
+            }
+            
+          })
+          $("#image1").on("click",function(event){
+            var state = $("#image1").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image1").attr("src",$("#image1").attr("data-still"));
+              $("#image1").attr("data-state", "animate");
+            }
+            else{
+              $("#image1").attr("src",$("#image1").attr("data-animate"));
+              $("#image1").attr("data-state", "still");
+            }
+          })
+          $("#image2").on("click",function(event){
+            var state = $("#image2").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image2").attr("src",$("#image2").attr("data-still"));
+              $("#image2").attr("data-state", "animate");
+            }
+            else{
+              $("#image2").attr("src",$("#image2").attr("data-animate"));
+              $("#image2").attr("data-state", "still");
+            }
+          })
+          $("#image3").on("click",function(event){
+            var state = $("#image3").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image3").attr("src",$("#image3").attr("data-still"));
+              $("#image3").attr("data-state", "animate");
+            }
+            else{
+              $("#image3").attr("src",$("#image3").attr("data-animate"));
+              $("#image3").attr("data-state", "still");
+            }
+          })
+          $("#image4").on("click",function(event){
+            var state = $("#image4").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image4").attr("src",$("#image4").attr("data-still"));
+              $("#image4").attr("data-state", "animate");
+            }
+            else{
+              $("#image4").attr("src",$("#image4").attr("data-animate"));
+              $("#image4").attr("data-state", "still");
+            }
+          })
+          $("#image5").on("click",function(event){
+            var state = $("#image5").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image5").attr("src",$("#image5").attr("data-still"));
+              $("#image5").attr("data-state", "animate");
+            }
+            else{
+              $("#image5").attr("src",$("#image5").attr("data-animate"));
+              $("#image5").attr("data-state", "still");
+            }
+          })
+          $("#image6").on("click",function(event){
+            var state = $("#image6").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image6").attr("src",$("#image6").attr("data-still"));
+              $("#image6").attr("data-state", "animate");
+            }
+            else{
+              $("#image6").attr("src",$("#image6").attr("data-animate"));
+              $("#image6").attr("data-state", "still");
+            }
+          })
+          $("#image7").on("click",function(event){
+            var state = $("#image7").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image7").attr("src",$("#image7").attr("data-still"));
+              $("#image7").attr("data-state", "animate");
+            }
+            else{
+              $("#image7").attr("src",$("#image7").attr("data-animate"));
+              $("#image7").attr("data-state", "still");
+            }
+          })
+          $("#image8").on("click",function(event){
+            var state = $("#image8").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image8").attr("src",$("#image8").attr("data-still"));
+              $("#image8").attr("data-state", "animate");
+            }
+            else{
+              $("#image8").attr("src",$("#image8").attr("data-animate"));
+              $("#image8").attr("data-state", "still");
+            }
+          })
+          $("#image9").on("click",function(event){
+            var state = $("#image9").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image9").attr("src",$("#image9").attr("data-still"));
+              $("#image9").attr("data-state", "animate");
+            }
+            else{
+              $("#image9").attr("src",$("#image9").attr("data-animate"));
+              $("#image9").attr("data-state", "still");
+            }
+          })
+        })
+      })
+
+      $("#city-1").on("click",function(){
+        var queryParams = {q:"Miami",rating:"pg-13",limit:"10",api_key:"h7qcAG9L2d7HxbOrYOig7VjbyaqyiA4x"}; 
+        console.log(queryParams)
+        console.log("Hello")
+        var queryURL = "http://api.giphy.com/v1/gifs/search?";
+        var queryURL = queryURL + $.param(queryParams);
+        console.log(queryURL);
+        $.ajax({
+          url:queryURL,
+          method:"GET"
+        }).then(function(response){
+          console.log(response);
+          var results = response.data;
+          console.log(results);
+          var number = 0;
+          for (i=0;i<results.length;i++){
+            console.log(results[i]);
+            var gifDiv = $("#cityResults");
+            var cityImage = $("<img>");
+            cityImage.attr("src",results[i].images.downsized_still.url)
+            cityImage.attr("data-still",results[i].images.fixed_height.url)
+            cityImage.attr("data-animate",results[i].images.downsized_still.url); 
+            cityImage.attr("data-state","still");
+            cityImage.attr("id","image" + number++);
+            console.log(cityImage);
+            gifDiv.append(cityImage);
+            var rating = $("<p>");
+            console.log(rating);
+            rating = results[i].rating;
+            console.log(rating);
+            gifDiv.append("Rating: " + rating);
+          }
+          $("#image0").on("click",function(event){
+            var state = $("#image0").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image0").attr("src",$("#image0").attr("data-still"));
+              $("#image0").attr("data-state", "animate");
+            }
+            else{
+              $("#image0").attr("src",$("#image0").attr("data-animate"));
+              $("#image0").attr("data-state", "still");
+            }
+            
+          })
+          $("#image1").on("click",function(event){
+            var state = $("#image1").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image1").attr("src",$("#image1").attr("data-still"));
+              $("#image1").attr("data-state", "animate");
+            }
+            else{
+              $("#image1").attr("src",$("#image1").attr("data-animate"));
+              $("#image1").attr("data-state", "still");
+            }
+          })
+          $("#image2").on("click",function(event){
+            var state = $("#image2").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image2").attr("src",$("#image2").attr("data-still"));
+              $("#image2").attr("data-state", "animate");
+            }
+            else{
+              $("#image2").attr("src",$("#image2").attr("data-animate"));
+              $("#image2").attr("data-state", "still");
+            }
+          })
+          $("#image3").on("click",function(event){
+            var state = $("#image3").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image3").attr("src",$("#image3").attr("data-still"));
+              $("#image3").attr("data-state", "animate");
+            }
+            else{
+              $("#image3").attr("src",$("#image3").attr("data-animate"));
+              $("#image3").attr("data-state", "still");
+            }
+          })
+          $("#image4").on("click",function(event){
+            var state = $("#image4").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image4").attr("src",$("#image4").attr("data-still"));
+              $("#image4").attr("data-state", "animate");
+            }
+            else{
+              $("#image4").attr("src",$("#image4").attr("data-animate"));
+              $("#image4").attr("data-state", "still");
+            }
+          })
+          $("#image5").on("click",function(event){
+            var state = $("#image5").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image5").attr("src",$("#image5").attr("data-still"));
+              $("#image5").attr("data-state", "animate");
+            }
+            else{
+              $("#image5").attr("src",$("#image5").attr("data-animate"));
+              $("#image5").attr("data-state", "still");
+            }
+          })
+          $("#image6").on("click",function(event){
+            var state = $("#image6").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image6").attr("src",$("#image6").attr("data-still"));
+              $("#image6").attr("data-state", "animate");
+            }
+            else{
+              $("#image6").attr("src",$("#image6").attr("data-animate"));
+              $("#image6").attr("data-state", "still");
+            }
+          })
+          $("#image7").on("click",function(event){
+            var state = $("#image7").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image7").attr("src",$("#image7").attr("data-still"));
+              $("#image7").attr("data-state", "animate");
+            }
+            else{
+              $("#image7").attr("src",$("#image7").attr("data-animate"));
+              $("#image7").attr("data-state", "still");
+            }
+          })
+          $("#image8").on("click",function(event){
+            var state = $("#image8").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image8").attr("src",$("#image8").attr("data-still"));
+              $("#image8").attr("data-state", "animate");
+            }
+            else{
+              $("#image8").attr("src",$("#image8").attr("data-animate"));
+              $("#image8").attr("data-state", "still");
+            }
+          })
+          $("#image9").on("click",function(event){
+            var state = $("#image9").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image9").attr("src",$("#image9").attr("data-still"));
+              $("#image9").attr("data-state", "animate");
+            }
+            else{
+              $("#image9").attr("src",$("#image9").attr("data-animate"));
+              $("#image9").attr("data-state", "still");
+            }
+          })
+        })
+      })
+
+      $("#city-2").on("click",function(){
+        var queryParams = {q:"San+Diego",rating:"pg-13",limit:"10",api_key:"h7qcAG9L2d7HxbOrYOig7VjbyaqyiA4x"}; 
+        console.log(queryParams)
+        console.log("Hello")
+        var queryURL = "http://api.giphy.com/v1/gifs/search?";
+        var queryURL = queryURL + $.param(queryParams);
+        console.log(queryURL);
+        $.ajax({
+          url:queryURL,
+          method:"GET"
+        }).then(function(response){
+          console.log(response);
+          var results = response.data;
+          console.log(results);
+          var number = 0;
+          for (i=0;i<results.length;i++){
+            console.log(results[i]);
+            var gifDiv = $("#cityResults");
+            var cityImage = $("<img>");
+            cityImage.attr("src",results[i].images.downsized_still.url)
+            cityImage.attr("data-still",results[i].images.fixed_height.url)
+            cityImage.attr("data-animate",results[i].images.downsized_still.url); 
+            cityImage.attr("data-state","still");
+            cityImage.attr("id","image" + number++);
+            console.log(cityImage);
+            gifDiv.append(cityImage);
+            var rating = $("<p>");
+            console.log(rating);
+            rating = results[i].rating;
+            console.log(rating);
+            gifDiv.append("Rating: " + rating);
+          }
+          $("#image0").on("click",function(event){
+            var state = $("#image0").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image0").attr("src",$("#image0").attr("data-still"));
+              $("#image0").attr("data-state", "animate");
+            }
+            else{
+              $("#image0").attr("src",$("#image0").attr("data-animate"));
+              $("#image0").attr("data-state", "still");
+            }
+            
+          })
+          $("#image1").on("click",function(event){
+            var state = $("#image1").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image1").attr("src",$("#image1").attr("data-still"));
+              $("#image1").attr("data-state", "animate");
+            }
+            else{
+              $("#image1").attr("src",$("#image1").attr("data-animate"));
+              $("#image1").attr("data-state", "still");
+            }
+          })
+          $("#image2").on("click",function(event){
+            var state = $("#image2").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image2").attr("src",$("#image2").attr("data-still"));
+              $("#image2").attr("data-state", "animate");
+            }
+            else{
+              $("#image2").attr("src",$("#image2").attr("data-animate"));
+              $("#image2").attr("data-state", "still");
+            }
+          })
+          $("#image3").on("click",function(event){
+            var state = $("#image3").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image3").attr("src",$("#image3").attr("data-still"));
+              $("#image3").attr("data-state", "animate");
+            }
+            else{
+              $("#image3").attr("src",$("#image3").attr("data-animate"));
+              $("#image3").attr("data-state", "still");
+            }
+          })
+          $("#image4").on("click",function(event){
+            var state = $("#image4").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image4").attr("src",$("#image4").attr("data-still"));
+              $("#image4").attr("data-state", "animate");
+            }
+            else{
+              $("#image4").attr("src",$("#image4").attr("data-animate"));
+              $("#image4").attr("data-state", "still");
+            }
+          })
+          $("#image5").on("click",function(event){
+            var state = $("#image5").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image5").attr("src",$("#image5").attr("data-still"));
+              $("#image5").attr("data-state", "animate");
+            }
+            else{
+              $("#image5").attr("src",$("#image5").attr("data-animate"));
+              $("#image5").attr("data-state", "still");
+            }
+          })
+          $("#image6").on("click",function(event){
+            var state = $("#image6").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image6").attr("src",$("#image6").attr("data-still"));
+              $("#image6").attr("data-state", "animate");
+            }
+            else{
+              $("#image6").attr("src",$("#image6").attr("data-animate"));
+              $("#image6").attr("data-state", "still");
+            }
+          })
+          $("#image7").on("click",function(event){
+            var state = $("#image7").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image7").attr("src",$("#image7").attr("data-still"));
+              $("#image7").attr("data-state", "animate");
+            }
+            else{
+              $("#image7").attr("src",$("#image7").attr("data-animate"));
+              $("#image7").attr("data-state", "still");
+            }
+          })
+          $("#image8").on("click",function(event){
+            var state = $("#image8").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image8").attr("src",$("#image8").attr("data-still"));
+              $("#image8").attr("data-state", "animate");
+            }
+            else{
+              $("#image8").attr("src",$("#image8").attr("data-animate"));
+              $("#image8").attr("data-state", "still");
+            }
+          })
+          $("#image9").on("click",function(event){
+            var state = $("#image9").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image9").attr("src",$("#image9").attr("data-still"));
+              $("#image9").attr("data-state", "animate");
+            }
+            else{
+              $("#image9").attr("src",$("#image9").attr("data-animate"));
+              $("#image9").attr("data-state", "still");
+            }
+          })
+        })
+      })
+
+      $("#city-3").on("click",function(){
+        var queryParams = {q:"Boston",rating:"pg-13",limit:"10",api_key:"h7qcAG9L2d7HxbOrYOig7VjbyaqyiA4x"}; 
+        console.log(queryParams)
+        console.log("Hello")
+        var queryURL = "http://api.giphy.com/v1/gifs/search?";
+        var queryURL = queryURL + $.param(queryParams);
+        console.log(queryURL);
+        $.ajax({
+          url:queryURL,
+          method:"GET"
+        }).then(function(response){
+          console.log(response);
+          var results = response.data;
+          console.log(results);
+          var number = 0;
+          for (i=0;i<results.length;i++){
+            console.log(results[i]);
+            var gifDiv = $("#cityResults");
+            var cityImage = $("<img>");
+            cityImage.attr("src",results[i].images.downsized_still.url)
+            cityImage.attr("data-still",results[i].images.fixed_height.url)
+            cityImage.attr("data-animate",results[i].images.downsized_still.url); 
+            cityImage.attr("data-state","still");
+            cityImage.attr("id","image" + number++);
+            console.log(cityImage);
+            gifDiv.append(cityImage);
+            var rating = $("<p>");
+            console.log(rating);
+            rating = results[i].rating;
+            console.log(rating);
+            gifDiv.append("Rating: " + rating);
+          }
+          $("#image0").on("click",function(event){
+            var state = $("#image0").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image0").attr("src",$("#image0").attr("data-still"));
+              $("#image0").attr("data-state", "animate");
+            }
+            else{
+              $("#image0").attr("src",$("#image0").attr("data-animate"));
+              $("#image0").attr("data-state", "still");
+            }
+            
+          })
+          $("#image1").on("click",function(event){
+            var state = $("#image1").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image1").attr("src",$("#image1").attr("data-still"));
+              $("#image1").attr("data-state", "animate");
+            }
+            else{
+              $("#image1").attr("src",$("#image1").attr("data-animate"));
+              $("#image1").attr("data-state", "still");
+            }
+          })
+          $("#image2").on("click",function(event){
+            var state = $("#image2").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image2").attr("src",$("#image2").attr("data-still"));
+              $("#image2").attr("data-state", "animate");
+            }
+            else{
+              $("#image2").attr("src",$("#image2").attr("data-animate"));
+              $("#image2").attr("data-state", "still");
+            }
+          })
+          $("#image3").on("click",function(event){
+            var state = $("#image3").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image3").attr("src",$("#image3").attr("data-still"));
+              $("#image3").attr("data-state", "animate");
+            }
+            else{
+              $("#image3").attr("src",$("#image3").attr("data-animate"));
+              $("#image3").attr("data-state", "still");
+            }
+          })
+          $("#image4").on("click",function(event){
+            var state = $("#image4").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image4").attr("src",$("#image4").attr("data-still"));
+              $("#image4").attr("data-state", "animate");
+            }
+            else{
+              $("#image4").attr("src",$("#image4").attr("data-animate"));
+              $("#image4").attr("data-state", "still");
+            }
+          })
+          $("#image5").on("click",function(event){
+            var state = $("#image5").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image5").attr("src",$("#image5").attr("data-still"));
+              $("#image5").attr("data-state", "animate");
+            }
+            else{
+              $("#image5").attr("src",$("#image5").attr("data-animate"));
+              $("#image5").attr("data-state", "still");
+            }
+          })
+          $("#image6").on("click",function(event){
+            var state = $("#image6").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image6").attr("src",$("#image6").attr("data-still"));
+              $("#image6").attr("data-state", "animate");
+            }
+            else{
+              $("#image6").attr("src",$("#image6").attr("data-animate"));
+              $("#image6").attr("data-state", "still");
+            }
+          })
+          $("#image7").on("click",function(event){
+            var state = $("#image7").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image7").attr("src",$("#image7").attr("data-still"));
+              $("#image7").attr("data-state", "animate");
+            }
+            else{
+              $("#image7").attr("src",$("#image7").attr("data-animate"));
+              $("#image7").attr("data-state", "still");
+            }
+          })
+          $("#image8").on("click",function(event){
+            var state = $("#image8").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image8").attr("src",$("#image8").attr("data-still"));
+              $("#image8").attr("data-state", "animate");
+            }
+            else{
+              $("#image8").attr("src",$("#image8").attr("data-animate"));
+              $("#image8").attr("data-state", "still");
+            }
+          })
+          $("#image9").on("click",function(event){
+            var state = $("#image9").attr("data-state");
+            console.log(state);
+            if(state === "still"){
+              $("#image9").attr("src",$("#image9").attr("data-still"));
+              $("#image9").attr("data-state", "animate");
+            }
+            else{
+              $("#image9").attr("src",$("#image9").attr("data-animate"));
+              $("#image9").attr("data-state", "still");
+            }
+          })
+        })
+      })
+    
+  });
+
+</script>
+
+</body>
+</html>
